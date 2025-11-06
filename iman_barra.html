@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simulador - Imán en Barra</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/iman_barra.css">
+</head>
+
+<body>
+  <div class="sim-container">
+
+    <a href="index.html" class="back-btn">← Volver al inicio</a>
+
+    <canvas id="sim-canvas"></canvas>
+
+    <div class="control-panel">
+      <h2>Imán en Barra</h2>
+
+      <label class="slider-label">Intensidad</label>
+      <div class="slider-container">
+        <span>0%</span>
+        <input type="range" id="intensity" min="0" max="100" value="75" />
+        <span>100%</span>
+      </div>
+
+      <div class="checkboxes">
+        <label><input type="checkbox" id="showField" checked /> Campo Magnético (B)</label>
+        <label><input type="checkbox" id="seeInside" /> Ver por dentro</label>
+        <label><input type="checkbox" id="earthField" /> Tierra</label>
+      </div>
+
+      <button id="invertPolarity" class="invert-btn">Invertir Polaridad</button>
+
+      <hr />
+
+      <div class="checkboxes">
+        <label><input type="checkbox" id="showCompass" checked /> Brújula</label>
+        <label><input type="checkbox" id="fieldMeter" /> Medidor de Campo</label>
+      </div>
+    </div>
+
+    <button id="resetBtn" class="reset-btn" title="Reiniciar simulador">&#x21bb;</button>
+
+  </div>
+
+<style>
+    /* 1. El contenedor principal AHORA es el "jefe" de la posición. 
+      Esto es VITAL.
+    */
+    .sim-container {
+      position: relative; 
+      width: 100vw; /* Ocupa todo el ancho de la ventana */
+      height: 100vh; /* Ocupa todo el alto de la ventana */
+      overflow: hidden; /* Evita barras de scroll raras */
+    }
+
+    /* 2. El Canvas es el FONDO (capa 1) 
+    */
+    #sim-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #000;
+      z-index: 1; /* La capa más baja */
+    }
+    
+    /* 3. El panel y los botones van ENCIMA (capa 10) 
+    */
+    .control-panel {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      z-index: 10;
+      /* Tus estilos de color, padding, etc. de tu .css 
+         se aplicarán automáticamente */
+    }
+    .back-btn {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 10;
+    }
+    .reset-btn {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      z-index: 10;
+    }
+  </style>
+
+  <script src="js/iman_barra.js" defer></script>
+</body>
+</html>

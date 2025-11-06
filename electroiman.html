@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simulador - Electroimán</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/electroiman.css">
+</head>
+
+<body>
+  <div id="main-container">
+
+    <a href="index.html" class="back-btn">← Volver al inicio</a>
+
+    <canvas id="sim-canvas-electro"></canvas>
+
+    <div id="control-panel-electro" class="control-panel">
+      <h2>Electroimán</h2>
+
+      <div class="section">
+        <label class="slider-label">Número de Espiras (N)</label>
+        <div class="turns-control">
+          <select id="turns-select" class="value-box">
+            <option value="1">1 Espira</option>
+            <option value="2">2 Espiras</option>
+            <option value="3">3 Espiras</option>
+            <option value="4" selected>4 Espiras</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="section checkboxes-group">
+        <h3>Visualización</h3>
+        <label><input type="checkbox" id="showElectrons" checked /> Mostrar Electrones</label>
+        <label><input type="checkbox" id="showField" checked /> Campo Magnético (B)</label>
+      </div>
+
+      <div class="section">
+        <h3>Fuente de Poder</h3>
+        <div class="power-source-toggle">
+          <button id="dc-button" class="active-source" title="Corriente Directa (CD / DC)">DC</button>
+          <button id="ac-button" title="Corriente Alterna (CA / AC)">AC</button>
+        </div>
+
+        <div id="dc-power-panel">
+          <h3>Voltaje (V): <span id="dc-voltage-value">5</span> V</h3>
+          <input type="range" id="dc-voltage-slider" min="-10" max="10" step="1" value="5" />
+          <div class="slider-labels">
+            <span>-10 V</span>
+            <span>+10 V</span>
+          </div>
+        </div>
+
+        <div id="ac-power-panel" style="display: none;">
+          <h3>Corriente Alterna (CA)</h3>
+
+          <label class="slider-label">Amplitud (A)</label>
+          <input type="range" id="ac-amplitude-slider" min="0" max="10" step="0.5" value="5" />
+          <div class="slider-labels">
+            <span>0 A</span>
+            <span id="ac-amplitude-value">5.0 A</span>
+          </div>
+
+          <label class="slider-label">Frecuencia (f)</label>
+          <input type="range" id="ac-frequency-slider" min="0.1" max="1" step="0.1" value="0.5" />
+          <div class="slider-labels">
+            <span>0.1 Hz</span>
+            <span id="ac-frequency-value">0.5 Hz</span>
+          </div>
+          
+          <canvas id="ac-graph-canvas"></canvas>
+        </div>
+      </div>
+      
+      <div class="section">
+        <label class="slider-label">Control de Simulación</label>
+        <div class="sim-control-buttons">
+          <button id="pause-btn" title="Pausar" class="active-control">⏸</button>
+          <button id="step-btn" title="Paso a Paso" disabled>&#9654;| </button>
+          <button id="play-btn" title="Reproducir" class="inactive-control">▶</button>
+        </div>
+      </div>
+
+      <div class="section checkboxes-group">
+        <h3>Herramientas</h3>
+        <label><input type="checkbox" id="showCompass" checked /> Brújula</label>
+        <label><input type="checkbox" id="fieldMeter" /> Medidor de Campo</label>
+      </div>
+    </div>
+
+    <button id="resetBtn" class="reset-btn" title="Reiniciar simulador">&#x21bb;</button>
+
+  </div>
+
+  <script src="js/electroiman.js"></script>
+</body>
+</html>

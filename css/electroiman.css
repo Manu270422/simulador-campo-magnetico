@@ -1,0 +1,250 @@
+/* =========================================
+   SIMULADOR ELECTROIMÁN — v2.0 (Diseño PRO)
+   ========================================= */
+
+/* --- 1. Globales y Tipografía --- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+    color: #333; /* Color de texto por defecto en los paneles */
+}
+body {
+    background: #1a1a1a;
+    overflow: hidden;
+    height: 100vh;
+}
+
+/* --- 2. Contenedores y Canvas --- */
+#main-container {
+    display: flex;
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background-color: #1a1a1a; /* Fondo oscuro del simulador */
+}
+#sim-canvas-electro {
+    flex-grow: 1; 
+    border: 1px solid #333;
+    cursor: default;
+    background-color: #1a1a1a; /* Fondo del canvas */
+}
+
+/* --- 3. Panel de Control General (Derecha) --- */
+.control-panel {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 250px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    z-index: 10;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.control-panel h2 {
+    color: #007bff;
+    text-align: center;
+    margin-bottom: 5px;
+    font-size: 1.5em;
+    font-weight: 700;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 5px;
+}
+.section {
+    padding: 5px 0;
+    border-top: 1px solid #eee;
+}
+.section h3 {
+    font-size: 1.1em;
+    color: #555;
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+.slider-label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 700;
+    font-size: 0.9em;
+}
+
+/* --- 4. Controles de Input (Sliders, Checkboxes) --- */
+input[type="range"] {
+    width: 100%;
+    margin: 5px 0;
+}
+.slider-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8em;
+    color: #777;
+    margin-bottom: 5px;
+}
+.checkboxes-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 0.9em;
+}
+.checkboxes-group label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+.checkboxes-group input[type="checkbox"] {
+    margin-right: 8px;
+    transform: scale(1.2);
+}
+
+/* --- 5. Controles Específicos (Espiras, DC/AC) --- */
+.turns-control {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+.arrow-btn {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: 700;
+    transition: background-color 0.2s;
+}
+.arrow-btn:hover {
+    background-color: #0056b3;
+}
+.value-box {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-weight: 700;
+    min-width: 50px;
+    text-align: center;
+}
+.power-source-toggle {
+    display: flex;
+    margin-bottom: 10px;
+}
+.power-source-toggle button {
+    flex-grow: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    background-color: #eee;
+    color: #555;
+    font-weight: 700;
+    transition: all 0.2s;
+}
+.power-source-toggle .active-source {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+.power-source-toggle button:first-child {
+    border-radius: 8px 0 0 8px;
+}
+.power-source-toggle button:last-child {
+    border-radius: 0 8px 8px 0;
+}
+#ac-graph-canvas {
+    margin: 10px auto;
+    display: block;
+    border-radius: 6px;
+}
+
+/* --- 6. Botones de Navegación (Volver / Reset) --- */
+.back-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    text-decoration: none;
+    color: #00aaff; 
+    background: rgba(0, 170, 255, 0.1);
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 170, 255, 0.3);
+    transition: all 0.2s ease;
+    font-weight: 700;
+    z-index: 10;
+}
+.back-btn:hover {
+    background: rgba(0, 170, 255, 0.3);
+    color: white;
+}
+.reset-btn {
+    position: absolute;
+    bottom: 20px;
+    right: 25px;
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(145deg, #ff8a00, #ff4500);
+    border: none;
+    border-radius: 50%;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(255, 140, 0, 0.3);
+    transition: all 0.2s ease;
+    z-index: 10;
+}
+.reset-btn:hover {
+    transform: rotate(90deg) scale(1.1);
+    box-shadow: 0 6px 20px rgba(255, 180, 0, 0.5);
+}
+.reset-btn:active {
+    transform: rotate(90deg) scale(1.0);
+}
+
+/* --- 7. Controles de Simulación (Pausa/Play) --- */
+.sim-control-buttons {
+    display: flex;
+    justify-content: space-around;
+    gap: 5px;
+    margin-top: 10px;
+}
+.sim-control-buttons button {
+    padding: 8px 15px;
+    font-size: 1.2em;
+    font-weight: bold;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #eee;
+    color: #333;
+    transition: all 0.15s ease;
+    flex-grow: 1;
+}
+
+.sim-control-buttons button:hover:not(:disabled) {
+    background-color: #ddd;
+}
+
+.sim-control-buttons button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+    background-color: #f0f0f0 !important;
+    color: #aaa !important;
+    border-color: #ddd !important;
+}
+
+/* Estilos de Estado */
+.sim-control-buttons .active-control {
+    background-color: #ffc107; /* Amarillo para 'Pausa' */
+    border-color: #ff9800;
+    color: #333;
+}
+.sim-control-buttons .inactive-control {
+    background-color: #28a745; /* Verde para 'Play' */
+    border-color: #1e7e34;
+    color: white;
+}
