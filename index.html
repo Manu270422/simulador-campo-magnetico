@@ -1,44 +1,92 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Imanes y Electroimanes — Simulador</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Imanes y Electroimanes — CyberMagnet</title>
+
+  <!-- Tipografía Futurista -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@300;400;700&display=swap" rel="stylesheet">
+
+  <!-- Estilos CyberMagnet -->
   <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
-  <header class="topbar">
-    <h1>Imanes y Electroimanes</h1>
-  </header>
 
-  <main class="container">
-    <section class="modules">
-      <!-- Módulo Imán de barra -->
-      <article class="module" id="module-bar">
-        <div class="module-card">
+  <!-- WebGL background canvas (covers whole page) -->
+  <canvas id="bg-webgl-canvas" class="bg-canvas"></canvas>
+
+  <!-- Partículas (canvas 2D encima) -->
+  <canvas id="particles-canvas" class="bg-canvas"></canvas>
+
+  <!-- Contenedor global -->
+  <div class="hero-container">
+
+    <!-- Título -->
+    <header class="topbar">
+      <h1 id="site-logo">Imanes y Electroimanes</h1>
+      <p>Simuladores Interactivos — Física Electromagnética</p>
+    </header>
+
+    <!-- Contenido principal -->
+    <main class="modules">
+
+      <!-- Módulo: Imán de Barra -->
+      <article class="module" data-module="bar">
+        <div class="module-card" tabindex="0">
           <div class="logo-wrap">
-            <img id="logo-barra" src="assets/iman_barra.png" alt="Imán de barra">
+            <div class="mag-waves" aria-hidden="true"></div>
+            <img src="assets/iman_barra.png" alt="Imán de barra" class="module-logo" />
           </div>
         </div>
-        <h2 class="module-title">Imán de barra</h2>
-        <a href="iman_barra.html" class="btn open-btn">Abrir</a>
+        <h2 class="module-title">Imán de Barra</h2>
+        <a href="iman_barra.html" class="btn open-btn" data-target="bar">Abrir</a>
       </article>
 
-      <!-- Módulo Electroimán -->
-      <article class="module" id="module-electro">
-        <div class="module-card">
+      <!-- Módulo: Electroimán -->
+      <article class="module" data-module="electro">
+        <div class="module-card" tabindex="0">
           <div class="logo-wrap">
-            <img id="logo-electro" src="assets/electroiman.png" alt="Electroimán">
+            <div class="mag-waves" aria-hidden="true"></div>
+            <img src="assets/electroiman.png" alt="Electroimán" class="module-logo" />
           </div>
         </div>
         <h2 class="module-title">Electroimán</h2>
-        <a href="electroiman.html" class="btn open-btn">Abrir</a>
+        <a href="electroiman.html" class="btn open-btn" data-target="electro">Abrir</a>
       </article>
-    </section>
-  </main>
 
+    </main>
+
+    <!-- Botón de presentación -->
+    <section class="presentation-link">
+      <h3>¿Quieres ver la sustentación del proyecto?</h3>
+
+      <a href="https://www.canva.com/design/DAG4E5sQhGg/JkU4fw4UKEk5RbNnfCdFjg/view"
+         target="_blank" 
+         rel="noopener noreferrer"
+         id="canva-btn">
+        Ver Diapositivas ↗
+      </a>
+    </section>
+
+  </div>
+
+  <!-- Modal (Panel lateral) -->
+  <aside class="sim-panel hidden" id="sim-panel">
+    <button class="close-btn" id="close-panel">&times;</button>
+    <h2 id="sim-title"></h2>
+    <div id="sim-body"></div>
+    <a href="#" id="modal-link" class="btn modal-open">¡Abrir Simulador!</a>
+  </aside>
+
+  <!-- Sonidos (preload) -->
+  <audio id="snd-open" src="assets/audio/energy.mp3" preload="auto"></audio>
+  <audio id="snd-click" src="assets/audio/click.mp3" preload="auto"></audio>
+  <!-- hum loop (reproduce en hover suave) -->
+  <audio id="snd-hum" src="assets/audio/hum.mp3" preload="auto" loop></audio>
+
+  <!-- Script -->
   <script src="js/script.js" defer></script>
 </body>
 </html>

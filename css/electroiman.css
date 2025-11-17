@@ -1,16 +1,18 @@
 /* =========================================
-   SIMULADOR ELECTROIMÁN — v2.0 (Diseño PRO)
+   SIMULADOR ELECTROIMÁN — v2.1 (Panel 3D)
    ========================================= */
 
 /* --- 1. Globales y Tipografía --- */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Inter', sans-serif;
-    color: #333; /* Color de texto por defecto en los paneles */
+    color: #333;
 }
+
 body {
     background: #1a1a1a;
     overflow: hidden;
@@ -23,16 +25,17 @@ body {
     position: relative;
     width: 100vw;
     height: 100vh;
-    background-color: #1a1a1a; /* Fondo oscuro del simulador */
-}
-#sim-canvas-electro {
-    flex-grow: 1; 
-    border: 1px solid #333;
-    cursor: default;
-    background-color: #1a1a1a; /* Fondo del canvas */
+    background-color: #1a1a1a;
 }
 
-/* --- 3. Panel de Control General (Derecha) --- */
+#sim-canvas-electro {
+    flex-grow: 1;
+    border: 1px solid #333;
+    cursor: default;
+    background-color: #1a1a1a;
+}
+
+/* --- 3. Panel de Control --- */
 .control-panel {
     position: absolute;
     top: 20px;
@@ -47,7 +50,14 @@ body {
     display: flex;
     flex-direction: column;
     gap: 15px;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
+
+.control-panel:hover {
+    transform: scale(1.03) rotateX(3deg) rotateY(-5deg);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+}
+
 .control-panel h2 {
     color: #007bff;
     text-align: center;
@@ -57,16 +67,19 @@ body {
     border-bottom: 2px solid #ccc;
     padding-bottom: 5px;
 }
+
 .section {
     padding: 5px 0;
     border-top: 1px solid #eee;
 }
+
 .section h3 {
     font-size: 1.1em;
     color: #555;
     margin-bottom: 8px;
     font-weight: 700;
 }
+
 .slider-label {
     display: block;
     margin-bottom: 5px;
@@ -74,11 +87,12 @@ body {
     font-size: 0.9em;
 }
 
-/* --- 4. Controles de Input (Sliders, Checkboxes) --- */
+/* --- 4. Inputs --- */
 input[type="range"] {
     width: 100%;
     margin: 5px 0;
 }
+
 .slider-labels {
     display: flex;
     justify-content: space-between;
@@ -86,43 +100,33 @@ input[type="range"] {
     color: #777;
     margin-bottom: 5px;
 }
+
 .checkboxes-group {
     display: flex;
     flex-direction: column;
     gap: 5px;
     font-size: 0.9em;
 }
+
 .checkboxes-group label {
     display: flex;
     align-items: center;
     cursor: pointer;
 }
+
 .checkboxes-group input[type="checkbox"] {
     margin-right: 8px;
     transform: scale(1.2);
 }
 
-/* --- 5. Controles Específicos (Espiras, DC/AC) --- */
+/* --- 5. Espiras / AC-DC --- */
 .turns-control {
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 10px;
 }
-.arrow-btn {
-    padding: 5px 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 1.1em;
-    font-weight: 700;
-    transition: background-color 0.2s;
-}
-.arrow-btn:hover {
-    background-color: #0056b3;
-}
+
 .value-box {
     padding: 5px 10px;
     border: 1px solid #ccc;
@@ -131,10 +135,12 @@ input[type="range"] {
     min-width: 50px;
     text-align: center;
 }
+
 .power-source-toggle {
     display: flex;
     margin-bottom: 10px;
 }
+
 .power-source-toggle button {
     flex-grow: 1;
     padding: 8px;
@@ -145,30 +151,75 @@ input[type="range"] {
     font-weight: 700;
     transition: all 0.2s;
 }
+
 .power-source-toggle .active-source {
     background-color: #007bff;
     color: white;
     border-color: #007bff;
 }
+
 .power-source-toggle button:first-child {
     border-radius: 8px 0 0 8px;
 }
+
 .power-source-toggle button:last-child {
     border-radius: 0 8px 8px 0;
 }
-#ac-graph-canvas {
-    margin: 10px auto;
-    display: block;
+
+/* --- 6. Osciloscopio Redimensionable --- */
+#scope-wrapper {
+    position: relative;
+    width: 100%;
+    height: 180px;
+    background: #000;
     border-radius: 6px;
+    margin-top: 10px;
+    overflow: hidden;
+    resize: none;
 }
 
-/* --- 6. Botones de Navegación (Volver / Reset) --- */
+#ac-graph-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.resize-handle {
+    position: absolute;
+    bottom: 4px;
+    right: 4px;
+    width: 14px;
+    height: 14px;
+    background: #00ff55;
+    border-radius: 3px;
+    cursor: nwse-resize;
+    box-shadow: 0 0 8px #00ff5599;
+}
+
+/* --- 7. Botón Exportar CSV --- */
+.export-btn {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 2px solid #28a745;
+    background: #28a745;
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.export-btn:hover {
+    background: #1e7e34;
+}
+
+/* --- 8. Botones Navegación --- */
 .back-btn {
     position: absolute;
     top: 20px;
     left: 20px;
     text-decoration: none;
-    color: #00aaff; 
+    color: #00aaff;
     background: rgba(0, 170, 255, 0.1);
     padding: 8px 16px;
     border-radius: 8px;
@@ -177,10 +228,12 @@ input[type="range"] {
     font-weight: 700;
     z-index: 10;
 }
+
 .back-btn:hover {
     background: rgba(0, 170, 255, 0.3);
     color: white;
 }
+
 .reset-btn {
     position: absolute;
     bottom: 20px;
@@ -197,21 +250,24 @@ input[type="range"] {
     transition: all 0.2s ease;
     z-index: 10;
 }
+
 .reset-btn:hover {
     transform: rotate(90deg) scale(1.1);
     box-shadow: 0 6px 20px rgba(255, 180, 0, 0.5);
 }
+
 .reset-btn:active {
     transform: rotate(90deg) scale(1.0);
 }
 
-/* --- 7. Controles de Simulación (Pausa/Play) --- */
+/* --- 9. Botones de Simulación --- */
 .sim-control-buttons {
     display: flex;
     justify-content: space-around;
     gap: 5px;
     margin-top: 10px;
 }
+
 .sim-control-buttons button {
     padding: 8px 15px;
     font-size: 1.2em;
@@ -221,8 +277,7 @@ input[type="range"] {
     cursor: pointer;
     background-color: #eee;
     color: #333;
-    transition: all 0.15s ease;
-    flex-grow: 1;
+    transition: all 0.2s ease;
 }
 
 .sim-control-buttons button:hover:not(:disabled) {
@@ -237,14 +292,22 @@ input[type="range"] {
     border-color: #ddd !important;
 }
 
-/* Estilos de Estado */
 .sim-control-buttons .active-control {
-    background-color: #ffc107; /* Amarillo para 'Pausa' */
+    background-color: #ffc107;
     border-color: #ff9800;
     color: #333;
 }
+
 .sim-control-buttons .inactive-control {
-    background-color: #28a745; /* Verde para 'Play' */
+    background-color: #28a745;
     border-color: #1e7e34;
     color: white;
+}
+
+/* --- 10. Responsivo --- */
+@media (max-width: 900px) {
+    .control-panel:hover {
+        transform: none;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    }
 }

@@ -35,6 +35,8 @@
         <h3>Visualización</h3>
         <label><input type="checkbox" id="showElectrons" checked /> Mostrar Electrones</label>
         <label><input type="checkbox" id="showField" checked /> Campo Magnético (B)</label>
+        <label><input type="checkbox" id="showCore" /> Insertar Núcleo de Hierro</label>
+        <label><input type="checkbox" id="showInductionRing" /> Anillo de Inducción (Flujo)</label>
       </div>
 
       <div class="section">
@@ -69,16 +71,19 @@
             <span>0.1 Hz</span>
             <span id="ac-frequency-value">0.5 Hz</span>
           </div>
-          
-          <canvas id="ac-graph-canvas"></canvas>
+
+          <div id="scope-wrapper" class="resizable">
+            <canvas id="ac-graph-canvas"></canvas>
+            <div class="resize-handle" id="resize-handle"></div>
+          </div>
         </div>
       </div>
-      
+
       <div class="section">
         <label class="slider-label">Control de Simulación</label>
         <div class="sim-control-buttons">
           <button id="pause-btn" title="Pausar" class="active-control">⏸</button>
-          <button id="step-btn" title="Paso a Paso" disabled>&#9654;| </button>
+          <button id="step-btn" title="Paso a Paso" disabled>&#9654;|</button>
           <button id="play-btn" title="Reproducir" class="inactive-control">▶</button>
         </div>
       </div>
@@ -87,6 +92,11 @@
         <h3>Herramientas</h3>
         <label><input type="checkbox" id="showCompass" checked /> Brújula</label>
         <label><input type="checkbox" id="fieldMeter" /> Medidor de Campo</label>
+      </div>
+
+      <div class="section">
+        <h3>Exportar Datos</h3>
+        <button id="exportCSV" class="export-btn">Exportar CSV</button>
       </div>
     </div>
 
